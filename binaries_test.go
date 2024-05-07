@@ -15,8 +15,8 @@ func TestInt(t *testing.T) {
 	decludeCount := 0
 	
 	encodeInt(&bits, decludeCount, n)
-	i := decodeInt(&bits, 0, 32)
-	j := decodeInt(&bits, 32, 64)
+	i := decodeInt(&bits, 0, 3)
+	j := decodeInt(&bits, 61, 64)
 
 	fmt.Printf("Int:\n%s\n= %d = %d\n\n", Readable(bits), i, j)
 }

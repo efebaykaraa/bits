@@ -22,11 +22,11 @@ func TestInt(t *testing.T) {
 }
 
 func encodeInt(bits *[]bool, decludeCount int, n int) {
-	err := EncodeIntL(bits, decludeCount, n)
+	_, err := EncodeIntL(bits, decludeCount, n)
 	if err != nil {
 		log.Fatal(err)
 	}
-	err = EncodeIntR(bits, decludeCount, n)
+	_, err = EncodeIntR(bits, decludeCount, n)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -54,11 +54,11 @@ func TestString(t *testing.T) {
 }
 
 func encodeString(bits *[]bool, decludeCount int, s string) {
-	err := EncodeStringL(bits, decludeCount, s)
+	_, err := EncodeStringL(bits, decludeCount, s)
 	if err != nil {
 		log.Fatal(err)
 	}
-	err = EncodeStringR(bits, decludeCount, s)
+	_, err = EncodeStringR(bits, decludeCount, s)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -95,7 +95,7 @@ func readHelloWorld() string {
 
 // To test Formatter
 func TestFormatter(t *testing.T) {
-	bits := make([]bool, 1024)
+	bits := make([]bool, 124)
 	
 	f := NewFormatter(&bits)
 	f.Int(5, 0)

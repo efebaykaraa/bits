@@ -8,8 +8,7 @@ import (
 // Aligned to the left.
 func EncodeIntL(bits *[]bool, decludeCount int, n int) (int, error) {
 	space := BitsNeededInt(n)
-	len := len(*bits)
-	decludedLen := len - decludeCount
+	decludedLen := len(*bits) - decludeCount
 	if decludedLen < space {
 		return 0, fmt.Errorf("Integer %d does not fit in %d bits", n, decludedLen)
 	}
@@ -22,7 +21,7 @@ func EncodeIntL(bits *[]bool, decludeCount int, n int) (int, error) {
 		}
 	}
 
-	return len, nil
+	return space, nil
 }
 
 // Encode an integer to a slice of bits.
@@ -31,7 +30,7 @@ func EncodeIntR(bits *[]bool, decludeCount int, n int) (int, error) {
 	space := BitsNeededInt(n)
 	decludedLen := len(*bits) - decludeCount
 	if decludedLen < space {
-		return fmt.Errorf("Integer %d does not fit in %d bits", n, decludedLen)
+		return 0, fmt.Errorf("Integer %d does not fit in %d bits", n, decludedLen)
 	}
 
 	end := decludedLen
@@ -43,7 +42,7 @@ func EncodeIntR(bits *[]bool, decludeCount int, n int) (int, error) {
 		}
 	}
 
-	return nil
+	return space, nil
 }
 
 // Decode an integer from a slice of bits.

@@ -15,10 +15,10 @@ func Println(bits []bool) {
 	fmt.Println()
 }
 
-func EncodeStringL(bits *[]bool, decludeCount int, s string) error {
+func EncodeStringL(bits *[]bool, decludeCount int, s string) (int, error) {
 	space := len(s) * 8
 	if len(*bits) - decludeCount < space {
-		return fmt.Errorf("String %s does not fit in %d bits", s, len(*bits) - decludeCount)
+		return 0, fmt.Errorf("String %s does not fit in %d bits", s, len(*bits) - decludeCount)
 	}
 
 	for i, b := range s {
@@ -31,15 +31,15 @@ func EncodeStringL(bits *[]bool, decludeCount int, s string) error {
 		}
 	}
 
-	return nil
+	return space, nil
 }
 
-func EncodeStringR(bits *[]bool, decludeCount int, s string) error {
+func EncodeStringR(bits *[]bool, decludeCount int, s string) (int, error) {
 	space := BitsNeededString(s)
 
 	end := len(*bits) - decludeCount
 	if end < space {
-		return fmt.Errorf("String %s does not fit in %d bits", s, end)
+		return 0, fmt.Errorf("String %s does not fit in %d bits", s, end)
 	}
 
 	sLen := len(s)
@@ -54,7 +54,7 @@ func EncodeStringR(bits *[]bool, decludeCount int, s string) error {
 	}
 	
 
-	return nil
+	return space, nil
 }
 
 func DecodeString(bits []bool) string {

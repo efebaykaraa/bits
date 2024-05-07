@@ -40,6 +40,7 @@ func decodeInt(bits *[]bool, start int, end int) int {
 	return n
 }
 
+// To test String Encoding
 func TestString(t *testing.T) {
 	s := "Hello, World!"
 	bits := make([]bool, BitsNeededString(s)*2)
@@ -90,4 +91,16 @@ func readHelloWorld() string {
 	}
 	
 	return string(b)
+}
+
+// To test Formatter
+func TestFormatter(t *testing.T) {
+	bits := make([]bool, 1024)
+	
+	f := NewFormatter(&bits)
+	f.Int(5, 0)
+	f.String("Hello, World!", 0)
+	f.Bool(true, 0)
+	
+	fmt.Printf("Formatter:\n%s\n\n", Readable(bits))
 }

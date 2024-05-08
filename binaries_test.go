@@ -106,3 +106,11 @@ func TestFormatter(t *testing.T) {
 	
 	fmt.Printf("Formatter:\n%s\n\n", Readable(bits))
 }
+
+func TestEncodeAndDecodeBack(t *testing.T) {
+	var bits []bool
+	Encode(&bits, []byte("Hello, World!"))
+	var bytes []byte
+	Decode(&bytes, bits)
+	fmt.Printf("Encode and Decode Back:\n%s\n\n", string(bytes))
+}

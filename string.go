@@ -36,7 +36,6 @@ func EncodeStringL(bits *[]bool, decludeCount int, s string) (int, error) {
 
 func EncodeStringR(bits *[]bool, decludeCount int, s string) (int, error) {
 	space := BitsNeededString(s)
-	println(space)
 
 	end := len(*bits) - decludeCount
 	if end < space {

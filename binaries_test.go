@@ -12,21 +12,22 @@ import (
 func TestInt(t *testing.T) {
     bits := make([]bool, 64)
 	n := 5
+	size := 3
 	decludeCount := 0
-	
-	encodeInt(&bits, decludeCount, n)
+
+	encodeInt(&bits, size, decludeCount, n)
 	i := decodeInt(&bits, 0, 3)
 	j := decodeInt(&bits, 61, 64)
 
 	fmt.Printf("Int:\n%s\n= %d = %d\n\n", Readable(bits), i, j)
 }
 
-func encodeInt(bits *[]bool, decludeCount int, n int) {
-	_, err := EncodeIntL(bits, decludeCount, n)
+func encodeInt(bits *[]bool, size int,decludeCount int, n int) {
+	_, err := EncodeIntL(bits, size, decludeCount, n)
 	if err != nil {
 		log.Fatal(err)
 	}
-	_, err = EncodeIntR(bits, decludeCount, n)
+	_, err = EncodeIntR(bits, size, decludeCount, n)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -98,9 +99,10 @@ func TestFormatter(t *testing.T) {
 	bits := make([]bool, 124)
 	
 	f := NewFormatter(&bits)
-	f.Int(5, 0)
+	f.Int(5, 0, 0)
 	f.String("Hello, World!", 0)
 	f.Bool(true, 0)
+	f.Int(5, 3, 0)
 	
 	fmt.Printf("Formatter:\n%s\n\n", Readable(bits))
 }

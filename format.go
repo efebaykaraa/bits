@@ -16,8 +16,12 @@ func NewFormatter(bits *[]bool) *Formatter {
 	}
 }
 
-func (f *Formatter) Int(n int, decludeCount int) {
-	n, err := EncodeIntL(f.Buffer, f.Position + decludeCount, n)
+func (f *Formatter) Skip(n int) {
+	f.Position += n
+}
+
+func (f *Formatter) Int(n int, size int, decludeCount int) {
+	n, err := EncodeIntL(f.Buffer, size, f.Position + decludeCount, n)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -33,6 +37,6 @@ func (f *Formatter) String(s string, decludeCount int) {
 }
 
 func (f *Formatter) Bool(b bool, decludeCount int) {
-	f.Position += decludeCount
 	(*f.Buffer)[f.Position] = b
+	f.Position += decludeCount + 1
 }

@@ -6,10 +6,15 @@ import (
 
 // Encode an integer to a slice of bits.
 // Aligned to the left.
-func EncodeIntL(bits *[]bool, decludeCount int, n int) (int, error) {
-	space := BitsNeededInt(n)
+func EncodeIntL(bits *[]bool, size int, decludeCount int, n int) (int, error) {
+	var isize int
+	if (size <= 0) {
+		isize = BitsNeededInt(n)
+	} else {
+		isize = size
+	}
 	decludedLen := len(*bits) - decludeCount
-	if decludedLen < space {
+	if decludedLen < isize {
 		return 0, fmt.Errorf("Integer %d does not fit in %d bits", n, decludedLen)
 	}
 
@@ -21,20 +26,25 @@ func EncodeIntL(bits *[]bool, decludeCount int, n int) (int, error) {
 		}
 	}
 
-	return space, nil
+	return isize, nil
 }
 
 // Encode an integer to a slice of bits.
 // Aligned to the right.
-func EncodeIntR(bits *[]bool, decludeCount int, n int) (int, error) {
-	space := BitsNeededInt(n)
+func EncodeIntR(bits *[]bool, size int, decludeCount int, n int) (int, error) {
+	var isize int
+	if (size <= 0) {
+		isize = BitsNeededInt(n)
+	} else {
+		isize = size
+	}
 	decludedLen := len(*bits) - decludeCount
-	if decludedLen < space {
+	if decludedLen < isize {
 		return 0, fmt.Errorf("Integer %d does not fit in %d bits", n, decludedLen)
 	}
 
 	end := decludedLen
-	for i := end-1; i >= end-space; i-- {
+	for i := end-1; i >= end-isize; i-- {
 		if n&(1<<end-i) > 0 {
 			(*bits)[i] = true
 		} else {
@@ -42,7 +52,7 @@ func EncodeIntR(bits *[]bool, decludeCount int, n int) (int, error) {
 		}
 	}
 
-	return space, nil
+	return isize, nil
 }
 
 // Decode an integer from a slice of bits.

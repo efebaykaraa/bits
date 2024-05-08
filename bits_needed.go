@@ -9,5 +9,6 @@ func BitsNeededInt(n int) int {
 }
 
 func BitsNeededString(s string) int {
+	println(len(s) * 8)
 	return len(s) * 8
 }

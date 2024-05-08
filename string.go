@@ -1,4 +1,4 @@
-package bits
+package github.com/efexplose/bits
 
 import (
 	"fmt"

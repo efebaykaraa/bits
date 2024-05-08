@@ -1,4 +1,4 @@
-package bits
+package github.com/efexplose/bits
 
 func Encode(res *[]bool, byteSlice []byte) {
 	for _, b := range byteSlice {

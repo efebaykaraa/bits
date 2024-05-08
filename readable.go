@@ -1,4 +1,4 @@
-package bits
+package github.com/efexplose/bits
 
 func Readable(bits []bool) string {
 	var result string

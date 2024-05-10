@@ -30,14 +30,21 @@
 
 ### Coverting Other Types ###
 - We can **convert** `int` and `string` to `[]bool`.
+    ```go   
+    import (
+        "github.com/efexplose/bits/needed"
+        "github.com/efexplose/bits/encode"
+    )
+    ```
     ```go
+
     bits := make([]bool, 6) // Buffer to encode
     number := 5 // Number to encode
     size := needed.Int(number) // Size limit, automaticly calculated
                                   // Same function will be also called if set to 0
     decludeCount := 0 // Bits to skip
-    b.Encode.IntL(&bits, size, decludeCount, number) // Encode integer and alin to left
-    b.Encode.IntR(&bits, size, decludeCount, number) // Encode integer and alin to right
+    encode.IntL(&bits, size, decludeCount, number) // Encode integer and alin to left
+    encode.IntR(&bits, size, decludeCount, number) // Encode integer and alin to right
     // bits == []bool{true, false, true, true, false, true} = true
     ```
     ```go
@@ -45,18 +52,22 @@
     bits := size * 2 // Buffer to encode
     str := "Hello, World!" // String to encode
     decludeCount := 0 // Bits to skip
-    b.Encode.StringL(&bits, size, decludeCount, str) // Encode string and alin to left
-    b.Encode.StringR(&bits, size, decludeCount, str) // Encode string and alin to right
+    encode.StringL(&bits, size, decludeCount, str) // Encode string and alin to left
+    encode.StringR(&bits, size, decludeCount, str) // Encode string and alin to right
     // Too long to write down but basically it will encode hello world twice in the array
     ```
 
 ### Converting Them Back ###
 - We can **convert** `[]bool` to `int` and `string`.
     ```go
+    import "github.com/efexplose/bits/decode"
+    ```
+    ```go
+
     // Continues from the int encodig code above
     start := 0 // Start index
     end := start + size // End index
-    out, err := b.DecodeInt(bits, start, end) // Decode to out
+    out, err := decode.Int(bits, start, end) // Decode to out
     if err != nil {
         // Handle error
     }
@@ -66,27 +77,42 @@
     // Continues from the string encodig code above
     start := 0 // Start index
     end := start + size // End index
-    out, err := b.Decode.String(bits, start, end) // Decode to out
-    if err != nil {
-        // Handle error
-    }
+    out := decode.String(bits, start, end) // Decode to out
     // out == "Hello, World!" = true
     ```
 
 ### Formatter ###
 - We can use **the formatter** just like `fmt.Sprintf`. It will make it **easier** to do binary encoding.
     ```go
+    import (
+        "github.com/efexplose/bits/format"
+    )
+    ```
+    ```go
     bits := make([]bool, 128)
-    f := b.NewFormatter(bits)
-    decludeCount := 0
-    size :=
-    f.Int(5, 6, decludeCount) // Encode integer and align to left
+    f := format.NewFormatter(&bits)
+	f.Int(5, 0, 0)
+	f.String("Hello, World!", 0)
+	f.Bool(true, 0)
     ```
 
-#### Note: *To be honest, I got tired of writing this markdown. So I must recommend you to check the binaries_test.go file.*
+### Deformatter ###
+- **The deformatter** is used to **reverse** the process of **the formatter**.
+    ```go
+    import (
+        "github.com/efexplose/bits/deformat"
+    )
+    ```
+    ```go
+    bits := make([]bool, 128)
+    f := deformat.NewDeformatter(&bits)
+    f.Int(0, 0)
+    f.String(0)
+    f.Bool(0)
+    ```
 
 ## Other Nessecary Stuff ##
-- Bitwise operations are possible by converting `[]bool` to `int`. **Examples not included** in the test file.
+- Bitwise operations are possible by converting `[]bool` to `int`. Examples **aren't** included in the test file.
 
 ## Conclusion ##
 - That's all for now. I hope I won't need to update the package anymore xD. I will porbably implement a simpler way to deal with bitwise operations but if you do it before I do, please pull request. You can also fork the project and take the responsibility off my shoulders.

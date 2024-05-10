@@ -24,7 +24,7 @@ func TestInt(t *testing.T) {
 	encodeInt(&bits, size, decludeCount, n)
 	i := decodeInt(&bits, 0, 3)
 	j := decodeInt(&bits, 61, 64)
-
+	
 	fmt.Printf("Int:\n%s\n= %d = %d\n\n", Readable(bits), i, j)
 }
 
@@ -47,8 +47,16 @@ func decodeInt(bits *[]bool, start int, end int) int {
 	return n
 }
 
-// To test String Encoding
 func TestString(t *testing.T) {
+	var bits []bool
+	Encode(&bits, []byte("Hello, World!"))
+	var bytes []byte
+	Decode(&bytes, bits)
+	fmt.Printf("String Encode-Decode:\n%s\n\n", string(bytes))
+}
+
+// To test String Encoding
+func TestStringDeeper(t *testing.T) {
 	bits := make([]bool, needed.String(HW)*2)
 	decludeCount := 0
 	
@@ -119,12 +127,4 @@ func TestFormatters(t *testing.T) {
 	j := d.Int(3, 0)
 	
 	fmt.Printf("Deformatter:\n%d\n%s\n%t\n%d\n\n", i, s, b, j)
-}
-
-func TestEncodeAndDecodeBack(t *testing.T) {
-	var bits []bool
-	Encode(&bits, []byte("Hello, World!"))
-	var bytes []byte
-	Decode(&bytes, bits)
-	fmt.Printf("Encode and Decode Back:\n%s\n\n", string(bytes))
 }

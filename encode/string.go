@@ -5,6 +5,7 @@ import (
 	"github.com/efexplose/bits/needed"
 )
 
+// Aligned to the left.
 func StringL(bits *[]bool, decludeCount int, s string) (int, error) {
 	space := len(s) * 8
 	if len(*bits) - decludeCount < space {
@@ -24,6 +25,7 @@ func StringL(bits *[]bool, decludeCount int, s string) (int, error) {
 	return space, nil
 }
 
+// Aligned to the right.
 func StringR(bits *[]bool, decludeCount int, s string) (int, error) {
 	space := needed.String(s)
 

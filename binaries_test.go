@@ -12,7 +12,7 @@ import (
 	"github.com/efexplose/bits/decode"
 )
 
-const hw = "Hello, World!"
+const HW = "Hello, World!"
 
 // To test Integer Encoding
 func TestInt(t *testing.T) {
@@ -49,11 +49,11 @@ func decodeInt(bits *[]bool, start int, end int) int {
 
 // To test String Encoding
 func TestString(t *testing.T) {
-	bits := make([]bool, needed.String(hw)*2)
+	bits := make([]bool, needed.String(HW)*2)
 	decludeCount := 0
 	
-	encode.StringL(&bits, decludeCount, hw)
-	encode.StringR(&bits, decludeCount, hw)
+	encode.StringL(&bits, decludeCount, HW)
+	encode.StringR(&bits, decludeCount, HW)
 	
 	readable := ReadableGroup(bits, 8)
 

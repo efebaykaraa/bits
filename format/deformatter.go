@@ -22,7 +22,8 @@ func (f *Deformatter) Skip(n int) {
 }
 
 func (f *Deformatter) Int(size int, decludeCount int) int {
-	v, err := decode.Int(f.Buffer, size, f.Position + decludeCount)
+	start := f.Position + decludeCount
+	v, err := decode.Int(f.Buffer, start, start + size)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -31,8 +32,8 @@ func (f *Deformatter) Int(size int, decludeCount int) int {
 }
 
 func (f *Deformatter) String(size int, decludeCount int) string {
-	println(f.Position + decludeCount + size > len(*f.Buffer))
-	s := decode.String(f.Buffer, size, f.Position + decludeCount)
+	start := f.Position + decludeCount
+	s := decode.String(f.Buffer, start, start + size)
 	f.Position += decludeCount + size 
 	return s
 }

@@ -1,8 +1,9 @@
 package decode
 
-func String(bits *[]bool, size int, decludeCount int) string {
+// Range must be specified.
+func String(bits *[]bool, start int, end int) string {
 	var result string
-	for i := decludeCount; i < len(*bits); i += 8 {
+	for i := start; i < end; i += 8 {
 		var b byte
 		for j := 0; j < 8; j++ {
 			if (*bits)[i+j] {

@@ -5,7 +5,6 @@ import (
 	"github.com/efexplose/bits/needed"
 )
 
-// Encode an integer to a slice of bits.
 // Aligned to the left.
 func IntL(bits *[]bool, size int, decludeCount int, n int) (int, error) {
 	var isize int
@@ -30,7 +29,6 @@ func IntL(bits *[]bool, size int, decludeCount int, n int) (int, error) {
 	return isize, nil
 }
 
-// Encode an integer to a slice of bits.
 // Aligned to the right.
 func IntR(bits *[]bool, size int, decludeCount int, n int) (int, error) {
 	var isize int

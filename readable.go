@@ -1,4 +1,6 @@
-package github.com/efexplose/bits
+package bits
+
+import "fmt"
 
 func Readable(bits []bool) string {
 	var result string
@@ -25,4 +27,15 @@ func ReadableGroup(bits []bool, groupSize int) string {
 		}
 	}
 	return result
+}
+
+func Println(bits []bool) {
+	for _, b := range bits {
+		if b {
+			fmt.Print("1")
+		} else {
+			fmt.Print("0")
+		}
+	}
+	fmt.Println()
 }

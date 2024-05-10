@@ -1,4 +1,4 @@
-package github.com/efexplose/bits
+package bits
 
 func MaxInt(x, y int) int {
 	if x > y {

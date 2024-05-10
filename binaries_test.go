@@ -1,4 +1,4 @@
-package github.com/efexplose/bits
+package bits
 
 import (
 	"testing"
@@ -6,7 +6,13 @@ import (
 	"log"
 	"io"
 	"os"
+	"github.com/efexplose/bits/needed"
+	"github.com/efexplose/bits/format"
+	"github.com/efexplose/bits/encode"
+	"github.com/efexplose/bits/decode"
 )
+
+const hw = "Hello, World!"
 
 // To test Integer Encoding
 func TestInt(t *testing.T) {
@@ -23,18 +29,18 @@ func TestInt(t *testing.T) {
 }
 
 func encodeInt(bits *[]bool, size int,decludeCount int, n int) {
-	_, err := EncodeIntL(bits, size, decludeCount, n)
+	_, err := encode.IntL(bits, size, decludeCount, n)
 	if err != nil {
 		log.Fatal(err)
 	}
-	_, err = EncodeIntR(bits, size, decludeCount, n)
+	_, err = encode.IntR(bits, size, decludeCount, n)
 	if err != nil {
 		log.Fatal(err)
 	}
 }
 
 func decodeInt(bits *[]bool, start int, end int) int {
-	n, err := DecodeInt(bits, start, end)
+	n, err := decode.Int(bits, start, end)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -43,23 +49,23 @@ func decodeInt(bits *[]bool, start int, end int) int {
 
 // To test String Encoding
 func TestString(t *testing.T) {
-	s := "Hello, World!"
-	bits := make([]bool, BitsNeededString(s)*2)
+	bits := make([]bool, needed.String(hw)*2)
 	decludeCount := 0
 	
-	encodeString(&bits, decludeCount, s)
+	encode.StringL(&bits, decludeCount, hw)
+	encode.StringR(&bits, decludeCount, hw)
 	
 	readable := ReadableGroup(bits, 8)
 
 	difference(readHelloWorld(), readable)
 }
 
-func encodeString(bits *[]bool, decludeCount int, s string) {
-	_, err := EncodeStringL(bits, decludeCount, s)
+func EncodeString(bits *[]bool, decludeCount int, s string) {
+	_, err := encode.StringL(bits, decludeCount, s)
 	if err != nil {
 		log.Fatal(err)
 	}
-	_, err = EncodeStringR(bits, decludeCount, s)
+	_, err = encode.StringR(bits, decludeCount, s)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -95,16 +101,24 @@ func readHelloWorld() string {
 }
 
 // To test Formatter
-func TestFormatter(t *testing.T) {
-	bits := make([]bool, 124)
+func TestFormatters(t *testing.T) {
+	bits := make([]bool, 128)
 	
-	f := NewFormatter(&bits)
+	f := format.NewFormatter(&bits)
 	f.Int(5, 0, 0)
 	f.String("Hello, World!", 0)
 	f.Bool(true, 0)
 	f.Int(5, 3, 0)
 	
 	fmt.Printf("Formatter:\n%s\n\n", Readable(bits))
+
+	d := format.NewDeformatterL(&bits)
+	i := d.Int(3, 0)
+	s := d.String(needed.String("Hello, World!"), 0)
+	b := d.Bool(0)
+	j := d.Int(3, 0)
+	
+	fmt.Printf("Deformatter:\n%d\n%s\n%t\n%d\n\n", i, s, b, j)
 }
 
 func TestEncodeAndDecodeBack(t *testing.T) {

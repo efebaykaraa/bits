@@ -1,7 +1,8 @@
-package github.com/efexplose/bits
+package format
 
 import (
 	"log"
+	"github.com/efexplose/bits/encode"
 )
 
 type Formatter struct {
@@ -21,7 +22,7 @@ func (f *Formatter) Skip(n int) {
 }
 
 func (f *Formatter) Int(n int, size int, decludeCount int) {
-	n, err := EncodeIntL(f.Buffer, size, f.Position + decludeCount, n)
+	n, err := encode.IntL(f.Buffer, size, f.Position + decludeCount, n)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -29,7 +30,7 @@ func (f *Formatter) Int(n int, size int, decludeCount int) {
 }
 
 func (f *Formatter) String(s string, decludeCount int) {
-	n, err := EncodeStringL(f.Buffer, f.Position + decludeCount, s)
+	n, err := encode.StringL(f.Buffer, f.Position + decludeCount, s)
 	if err != nil {
 		log.Fatal(err)
 	}

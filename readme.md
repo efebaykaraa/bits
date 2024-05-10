@@ -29,33 +29,63 @@
     ```
 
 ### Coverting Other Types ###
-- We can **convert** `int` to `[]bool`.
+- We can **convert** `int` and `string` to `[]bool`.
     ```go
     bits := make([]bool, 6) // Buffer to encode
     number := 5 // Number to encode
-    size := BitsNeededInt(number) // Size limit, automaticly calculated
+    size := needed.Int(number) // Size limit, automaticly calculated
                                   // Same function will be also called if set to 0
     decludeCount := 0 // Bits to skip
-    b.EncodeIntL(&bits, size, decludeCount, number) // Encode integer and alin to left
-    b.EncodeIntR(&bits, size, decludeCount, number) // Encode integer and alin to right
+    b.Encode.IntL(&bits, size, decludeCount, number) // Encode integer and alin to left
+    b.Encode.IntR(&bits, size, decludeCount, number) // Encode integer and alin to right
     // bits == []bool{true, false, true, true, false, true} = true
     ```
-- We can **convert** `string` to `[]bool`.
     ```go
     size := 8 * len(str) // Size limit, 8 bits for each character
     bits := size * 2 // Buffer to encode
     str := "Hello, World!" // String to encode
     decludeCount := 0 // Bits to skip
-    b.EncodeStringL(&bits, size, decludeCount, str) // Encode string and alin to left
-    b.EncodeStringR(&bits, size, decludeCount, str) // Encode string and alin to right
+    b.Encode.StringL(&bits, size, decludeCount, str) // Encode string and alin to left
+    b.Encode.StringR(&bits, size, decludeCount, str) // Encode string and alin to right
     // Too long to write down but basically it will encode hello world twice in the array
+    ```
+
+### Converting Them Back ###
+- We can **convert** `[]bool` to `int` and `string`.
+    ```go
+    // Continues from the int encodig code above
+    start := 0 // Start index
+    end := start + size // End index
+    out, err := b.DecodeInt(bits, start, end) // Decode to out
+    if err != nil {
+        // Handle error
+    }
+    // out == 5 = true
+    ```
+    ```go
+    // Continues from the string encodig code above
+    start := 0 // Start index
+    end := start + size // End index
+    out, err := b.Decode.String(bits, start, end) // Decode to out
+    if err != nil {
+        // Handle error
+    }
+    // out == "Hello, World!" = true
+    ```
+
+### Formatter ###
+- We can use **the formatter** just like `fmt.Sprintf`. It will make it **easier** to do binary encoding.
+    ```go
+    bits := make([]bool, 128)
+    f := b.NewFormatter(bits)
+    decludeCount := 0
+    size :=
+    f.Int(5, 6, decludeCount) // Encode integer and align to left
     ```
 
 #### Note: *To be honest, I got tired of writing this markdown. So I must recommend you to check the binaries_test.go file.*
 
 ## Other Nessecary Stuff ##
-- Also `string` and `int` can be converted to `[]bool` by using `DecodeString()` and `DecodeInt()` functions. **Examples included** in the test file.**
-- Here is a formatter structure that works similar to `fmt.Sprintf` but easier to use. **Examples included** in the test file.
 - Bitwise operations are possible by converting `[]bool` to `int`. **Examples not included** in the test file.
 
 ## Conclusion ##

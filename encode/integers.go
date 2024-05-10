@@ -1,15 +1,16 @@
-package github.com/efexplose/bits
+package encode
 
 import (
 	"fmt"
+	"github.com/efexplose/bits/needed"
 )
 
 // Encode an integer to a slice of bits.
 // Aligned to the left.
-func EncodeIntL(bits *[]bool, size int, decludeCount int, n int) (int, error) {
+func IntL(bits *[]bool, size int, decludeCount int, n int) (int, error) {
 	var isize int
 	if (size <= 0) {
-		isize = BitsNeededInt(n)
+		isize = needed.Int(n)
 	} else {
 		isize = size
 	}
@@ -31,10 +32,10 @@ func EncodeIntL(bits *[]bool, size int, decludeCount int, n int) (int, error) {
 
 // Encode an integer to a slice of bits.
 // Aligned to the right.
-func EncodeIntR(bits *[]bool, size int, decludeCount int, n int) (int, error) {
+func IntR(bits *[]bool, size int, decludeCount int, n int) (int, error) {
 	var isize int
 	if (size <= 0) {
-		isize = BitsNeededInt(n)
+		isize = needed.Int(n)
 	} else {
 		isize = size
 	}
@@ -53,17 +54,4 @@ func EncodeIntR(bits *[]bool, size int, decludeCount int, n int) (int, error) {
 	}
 
 	return isize, nil
-}
-
-// Decode an integer from a slice of bits.
-// Range must be specified.
-func DecodeInt(bits *[]bool, start int, end int) (int, error) {
-	n := 0
-	for i := start; i < end; i++ {
-        if (*bits)[i] {
-            n |= 1 << (i - start)
-        }
-    }
-
-	return n, nil
 }

@@ -1,21 +1,11 @@
-package github.com/efexplose/bits
+package encode
 
 import (
 	"fmt"
+	"github.com/efexplose/bits/needed"
 )
 
-func Println(bits []bool) {
-	for _, b := range bits {
-		if b {
-			fmt.Print("1")
-		} else {
-			fmt.Print("0")
-		}
-	}
-	fmt.Println()
-}
-
-func EncodeStringL(bits *[]bool, decludeCount int, s string) (int, error) {
+func StringL(bits *[]bool, decludeCount int, s string) (int, error) {
 	space := len(s) * 8
 	if len(*bits) - decludeCount < space {
 		return 0, fmt.Errorf("String %s does not fit in %d bits", s, len(*bits) - decludeCount)
@@ -34,8 +24,8 @@ func EncodeStringL(bits *[]bool, decludeCount int, s string) (int, error) {
 	return space, nil
 }
 
-func EncodeStringR(bits *[]bool, decludeCount int, s string) (int, error) {
-	space := BitsNeededString(s)
+func StringR(bits *[]bool, decludeCount int, s string) (int, error) {
+	space := needed.String(s)
 
 	end := len(*bits) - decludeCount
 	if end < space {
@@ -55,18 +45,4 @@ func EncodeStringR(bits *[]bool, decludeCount int, s string) (int, error) {
 	
 
 	return space, nil
-}
-
-func DecodeString(bits []bool) string {
-	var result string
-	for i := 0; i < len(bits); i += 8 {
-		var b byte
-		for j := 0; j < 8; j++ {
-			if bits[i+j] {
-				b |= 1 << uint(7-j)
-			}
-		}
-		result += string(b)
-	}
-	return result
 }

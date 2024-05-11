@@ -3,6 +3,7 @@ package format
 import (
 	"log"
 	"github.com/efexplose/bits/encode"
+	"github.com/efexplose/bits/needed"
 )
 
 type Formatter struct {
@@ -23,6 +24,16 @@ func (f *Formatter) Skip(n int) {
 
 func (f *Formatter) Int(n int, size int, decludeCount int) {
 	n, err := encode.IntL(f.Buffer, size, f.Position + decludeCount, n)
+	if err != nil {
+		log.Fatal(err)
+	}
+	f.Position += decludeCount + n
+}
+
+func (f *Formatter) IntR(n int, size int, decludeCount int) {
+	neededInt := needed.Int(n)
+	alignedOffset := size - neededInt + f.Position + decludeCount
+	n, err := encode.IntL(f.Buffer, size, alignedOffset, neededInt)
 	if err != nil {
 		log.Fatal(err)
 	}

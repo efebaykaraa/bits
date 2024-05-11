@@ -11,3 +11,7 @@ func Int(n int) int {
 func Octets(n int) int {
 	return n * 8
 }
+
+func Decimals(n int) int {
+	return int(math.Log10(float64(n))) + 1
+}

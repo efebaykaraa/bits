@@ -57,7 +57,7 @@ func TestString(t *testing.T) {
 
 // To test String Encoding
 func TestStringDeeper(t *testing.T) {
-	bits := make([]bool, needed.Octets(HW)*2)
+	bits := make([]bool, needed.String(HW)*2)
 	decludeCount := 0
 	
 	encode.StringL(&bits, decludeCount, HW)
@@ -122,7 +122,7 @@ func TestFormatters(t *testing.T) {
 
 	d := format.NewDeformatterL(&bits)
 	i := d.Int(3, 0)
-	s := d.String(needed.Octets("Hello, World!"), 0)
+	s := d.String(needed.String("Hello, World!"), 0)
 	b := d.Bool(0)
 	j := d.Int(3, 0)
 	

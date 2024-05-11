@@ -27,7 +27,7 @@ func StringL(bits *[]bool, decludeCount int, s string) (int, error) {
 
 // Aligned to the right.
 func StringR(bits *[]bool, decludeCount int, s string) (int, error) {
-	space := needed.Octets(s)
+	space := needed.String(s)
 
 	end := len(*bits) - decludeCount
 	if end < space {
